@@ -1,0 +1,220 @@
+# Flask app
+app:
+  index:
+    showInDoc: true
+    name     : Flask app index
+    desc     : |
+      Index of the site
+      It's the landing page of the DEMO
+    method   : get
+    url      : /
+    response : html
+
+  doPost:
+    deprecated: true
+    showInDoc : true
+    name      : Flask app POST example
+    descType  : markdown
+    desc      : |
+      *Notice: This is only an example, Features does not match the program.*
+
+      A `POST` example for Flask app
+
+      Description supports Markdown:
+
+      | Table Title 1 | Table Title 2 |
+      |---------------|---------------|
+      | Cell 1        | Cell 2        |
+      | Cell 3        | Cell 4        |
+
+      # Header 1
+      ## Header 2
+      ### Header 3
+      #### Header 4
+      ##### Header 5
+      ###### Header 6
+
+      > Quote
+      >
+      > # Header in quote
+
+      *Strong line*
+
+      List:
+
+      1. list item 1
+      2. list item 2
+      3. list item 3
+
+      [link](https://cn.bing.com/)
+
+      ```python
+      for i in range(10):
+        print 'Code Block'
+      ```
+
+      `Code snippet`
+    requireSignIn: true
+    paging       : true
+    method   : post
+    url      : /do_post
+    response : json
+    headers:
+      X-String-Header:
+        $desc: String Header
+        $type: string
+      X-Enum-Header:
+        $desc: Enum Header
+        $type: enum
+        $in:
+          - enum1
+          - enum2
+          - enum3
+    query:
+      abort:
+        $desc: Abort in middleware
+        $type: enum
+        $in:
+          - global_middlewares_1
+          - global_middlewares_2
+          - api_middlewares_1
+          - api_middlewares_2
+    body:
+      data:
+        commaArray:
+          $desc: Comma Array
+          $type: commaArray
+          $commaArrayIn:
+            - enum1
+            - enum2
+            - enum3
+        intField:
+          $desc      : Integer Field
+          $isRequired: true
+          $type      : int
+          $minValue  : 1
+          $maxValue  : 10
+          $example   : 1
+        numberField:
+          $desc      : Number Field
+          $isRequired: true
+          $type      : number
+          $minValue  : 1
+          $maxValue  : 10
+          $example   : 1
+        stringField:
+          $desc      : String Field
+          $isRequired: true
+          $type      : string
+          $minLength : 3
+          $maxLength : 10
+          $example   : Tom
+        enumField:
+          $desc: Enum Field
+          $type: enum
+          $in:
+            - enumValue1
+            - enumValue2
+            - enumValue3
+        booleanField:
+          $desc   : Boolean Field
+          $type   : boolean
+          $example: false
+        simpleIntArrayField:
+          $desc     : Simple Integer Array Field
+          $minLength: 1
+          $maxLength: 5
+          $:
+            $desc    : Simple Integer Array Element
+            $type    : int
+            $minValue: 1
+            $maxValue: 10
+        simpleStringArrayField:
+          $desc     : Simple String Array Field
+          $minLength: 1
+          $maxLength: 5
+          $:
+            $desc     : Simple String Array Element
+            $type     : string
+            $minLength: 3
+            $maxLength: 10
+          $example: [str1, str2, str3]
+        simpleEnumArrayField:
+          $desc     : Simple Enum Array Field
+          $minLength: 1
+          $maxLength: 5
+          $:
+            $desc: Simple Enum Array Element
+            $type: enum
+            $in:
+              - enumValue1
+              - enumValue2
+              - enumValue3
+        simpleBooleanArrayField:
+          $desc     : Simple Boolean Array Field
+          $minLength: 1
+          $maxLength: 5
+          $:
+            $desc: Simple Boolean Array Element
+            $type: boolean
+        simpleAnyValueArrayField:
+          $desc     : Simple Any Value Array Field
+          $minLength: 1
+          $maxLength: 5
+          $:
+            $desc: Simple Any Value Array Element
+            $type: any
+        jsonArrayField:
+          $desc     : JSON Array Field
+          $minLength: 1
+          $maxLength: 5
+          $:
+            intField:
+              $desc      : Integer Field
+              $isRequired: true
+              $type      : int
+              $minValue  : 1
+              $maxValue  : 10
+              $example   : 1
+            stringField:
+              $desc      : String Field
+              $type      : string
+              $minLength : 3
+              $maxLength : 10
+              $example   : Tom
+
+# MyModule blueprint
+myModule:
+  index:
+    # showInDoc: true
+    name     : MyModule blueprint index
+    method   : get
+    url      : /
+    response : html
+
+  doPost:
+    showInDoc: true
+    name     : MyModule blueprint POST example
+    method   : post
+    url      : /<param_field>/do_post
+    response : json
+    params:
+      param_field:
+        $desc: Param Field
+        $type: string
+    body:
+      data:
+        $desc      : Post Body
+        $isRequired: true
+        $type      : any
+
+  doPostWithOutBody:
+    showInDoc: true
+    name     : MyModule blueprint POST (with out body) example
+    method   : post
+    url      : /<param_field>/do_post_without_body
+    response : json
+    params:
+      param_field:
+        $desc: Param Field
+        $type: string
