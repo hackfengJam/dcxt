@@ -11,9 +11,9 @@ except ImportError:
 
 from flask import Flask, Blueprint, request, render_template, jsonify
 
-from routeloader import RouteLoader
-from my_middlewares import global_middlewares_1, global_middlewares_2, api_middlewares_1, api_middlewares_2
-from my_decorators import api_decorator_1, api_decorator_2
+from pt_dcxt.routeloader import RouteLoader
+from pt_dcxt.my_middlewares import global_middlewares_1, global_middlewares_2, api_middlewares_1, api_middlewares_2
+from pt_dcxt.my_decorators import api_decorator_1, api_decorator_2
 
 
 
@@ -22,9 +22,8 @@ from my_decorators import api_decorator_1, api_decorator_2
 # Load API config file
 ROUTE = None
 basedir = os.path.abspath(os.path.dirname(__file__))
-with open(basedir + '/route.yaml') as _f:
+with open(basedir + '/route.yaml', encoding="utf-8") as _f:
     ROUTE = yaml.load(_f.read())
-
 
 
 ##### Use RouteLoader on Flask app object #####
@@ -65,7 +64,7 @@ def my_module_index():
 @route_loader.route(my_module_bp, ROUTE['myModule']['doPost'])
 def my_module_do_post(**kwargs):
     body = json.loads(request.get_data(as_text=True))
-    print body
+    print(body)
     return jsonify({"param": kwargs, "body": body})
 
 @route_loader.route(my_module_bp, ROUTE['myModule']['doPostWithOutBody'])

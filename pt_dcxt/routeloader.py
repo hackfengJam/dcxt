@@ -8,11 +8,12 @@ import hashlib
 from flask import Blueprint, request, abort, render_template, make_response, jsonify
 import markdown
 
-from objectchecker import ObjectChecker
+from pt_dcxt.objectchecker import ObjectChecker
+
 
 def get_md5(s):
     md5 = hashlib.md5()
-    md5.update(str(s))
+    md5.update(s.encode("utf-8"))
 
     md5_string = md5.hexdigest()
     return md5_string
